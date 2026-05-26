@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Booster — Обучение + Внедрение ИИ для вашего бизнеса</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lime: #AAFF00;
+    --lime-dark: #88CC00;
+    --bg: #111111;
+    --bg2: #1a1a1a;
+    --bg3: #222222;
+    --card: #1e1e1e;
+    --card2: #252525;
+    --white: #ffffff;
+    --gray: #aaaaaa;
+    --border: #2e2e2e;
+    --red: #FF3B3B;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  h1,h2,h3,h4 { font-family: 'Unbounded', sans-serif; line-height: 1.15; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(17,17,17,.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 20px; font-weight: 900;
+    color: var(--white);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { color: var(--lime); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: var(--gray); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--lime); color: #000; font-family: 'Unbounded', sans-serif;
+    font-size: 12px; font-weight: 700; padding: 10px 20px; border-radius: 8px;
+    text-decoration: none; transition: transform .15s, background .15s;
+  }
+  .nav-cta:hover { background: var(--lime-dark); transform: translateY(-1px); }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); margin: 5px 0; transition: all .3s; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 120px 24px 80px;
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--lime); color: #000;
+    font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 700;
+    padding: 6px 14px; border-radius: 6px; margin-bottom: 20px;
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .hero h1 .accent { color: var(--lime); }
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 18px);
+    color: #ccc; font-weight: 600; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-sub::before { content: ''; display: block; width: 36px; height: 3px; background: var(--lime); flex-shrink: 0; }
+  .hero-desc { color: var(--gray); font-size: 15px; margin-bottom: 32px; max-width: 500px; }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--lime); color: #000;
+    font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 700;
+    padding: 14px 28px; border-radius: 10px; text-decoration: none; border: none; cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(170,255,0,.25); }
+  .btn-secondary {
+    background: transparent; color: var(--white);
+    font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 700;
+    padding: 14px 28px; border-radius: 10px; text-decoration: none;
+    border: 1.5px solid var(--border); cursor: pointer; transition: border-color .2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--lime); color: var(--lime); }
+
+  /* Timer card */
+  .hero-right { display: flex; flex-direction: column; gap: 16px; }
+  .timer-card {
+    background: var(--lime); color: #000;
+    border-radius: 16px; padding: 24px;
+  }
+  .timer-label { font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
+  .timer-title { font-family: 'Unbounded', sans-serif; font-size: 20px; font-weight: 900; margin-bottom: 16px; }
+  .timer-boxes { display: flex; gap: 8px; }
+  .tbox { background: #000; color: var(--lime); border-radius: 8px; padding: 10px 14px; text-align: center; flex: 1; }
+  .tbox-num { font-family: 'Unbounded', sans-serif; font-size: 28px; font-weight: 900; line-height: 1; }
+  .tbox-lbl { font-size: 10px; font-weight: 600; color: #aaa; margin-top: 2px; }
+  .discount-tag { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; font-weight: 700; }
+  .discount-tag s { opacity: .5; font-weight: 400; }
+
+  .stats-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-card {
+    background: var(--card2); border-radius: 12px; padding: 18px;
+    border: 1px solid var(--border);
+  }
+  .stat-num { font-family: 'Unbounded', sans-serif; font-size: 32px; font-weight: 900; color: var(--lime); line-height: 1; }
+  .stat-txt { font-size: 12px; color: var(--gray); margin-top: 4px; }
+
+  /* ── SECTION ── */
+  section { padding: 80px 24px; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--lime); font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 16px;
+  }
+  .section-label::before { content: ''; width: 20px; height: 2px; background: var(--lime); display: block; }
+  h2.section-title { font-size: clamp(24px, 4vw, 42px); font-weight: 900; margin-bottom: 12px; }
+  .section-desc { color: var(--gray); font-size: 16px; max-width: 600px; margin-bottom: 48px; }
+
+  /* ── WHY STATS ── */
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+  .why-card {
+    background: var(--card); border-radius: 14px; padding: 24px;
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .why-card::before { content: attr(data-n); position: absolute; top: -10px; right: 16px; font-family: 'Unbounded', sans-serif; font-size: 80px; font-weight: 900; color: rgba(170,255,0,.06); pointer-events: none; }
+  .why-num { font-family: 'Unbounded', sans-serif; font-size: 40px; font-weight: 900; color: var(--lime); margin-bottom: 8px; }
+  .why-text { font-size: 14px; color: #ccc; line-height: 1.5; }
+  .why-text strong { color: var(--white); }
+  .why-banner {
+    background: var(--lime); border-radius: 14px; padding: 20px 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .why-banner-icon { font-size: 24px; flex-shrink: 0; }
+  .why-banner-text { font-size: 15px; font-weight: 700; color: #000; }
+
+  /* ── AI TOOLS ── */
+  .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .tools-col { background: var(--card); border-radius: 16px; padding: 20px; border: 1px solid var(--border); }
+  .tools-col-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .tools-col-icon { background: var(--lime); border-radius: 10px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .tools-col-name { font-family: 'Unbounded', sans-serif; font-size: 14px; font-weight: 700; }
+  .tools-col-sub { font-size: 12px; color: var(--gray); margin-top: 2px; }
+  .tool-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .tool-item:last-child { border-bottom: none; }
+  .tool-logo { width: 36px; height: 36px; border-radius: 8px; background: var(--bg3); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .tool-info { font-size: 14px; font-weight: 600; }
+  .tool-info small { display: block; font-size: 12px; color: var(--gray); font-weight: 400; }
+
+  /* ── COURSE CARD ── */
+  .course-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 0; }
+  .course-section > .inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .course-header { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .course-tag {
+    display: inline-block; background: var(--lime); color: #000;
+    font-family: 'Unbounded', sans-serif; font-size: 10px; font-weight: 700;
+    padding: 5px 12px; border-radius: 6px; margin-bottom: 16px;
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .course-price { font-family: 'Unbounded', sans-serif; font-size: 40px; font-weight: 900; color: var(--lime); margin: 16px 0 4px; }
+  .course-price small { font-size: 16px; color: var(--gray); font-weight: 400; }
+  .course-target { font-size: 14px; color: var(--gray); margin-bottom: 24px; }
+  .course-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .course-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; }
+  .course-features li::before { content: '✓'; color: var(--lime); font-weight: 700; flex-shrink: 0; font-size: 16px; line-height: 1.4; }
+  .course-modules { display: flex; flex-direction: column; gap: 8px; }
+  .module-row {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--card); border-radius: 12px; padding: 16px 20px;
+    border: 1px solid var(--border); cursor: pointer; transition: border-color .2s;
+  }
+  .module-row:hover { border-color: var(--lime); }
+  .module-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--lime); color: #000;
+    font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .module-label { font-size: 11px; color: var(--lime); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+  .module-title { font-size: 14px; font-weight: 600; }
+  .module-expand { margin-left: auto; color: var(--gray); font-size: 18px; transition: transform .2s; }
+  .module-detail { display: none; padding: 0 20px 16px 68px; background: var(--card); border-radius: 0 0 12px 12px; margin-top: -8px; border: 1px solid var(--border); border-top: none; }
+  .module-detail.open { display: block; }
+  .module-detail ul { list-style: none; display: flex; flex-direction: column; gap: 8px; padding-top: 12px; }
+  .module-detail li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #ccc; }
+  .module-detail li::before { content: ''; width: 6px; height: 6px; background: var(--lime); border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .course-btns { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+
+  /* ── PRICING ── */
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .price-card {
+    background: var(--card); border-radius: 20px; padding: 32px;
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .price-card.recommended { border-color: var(--lime); }
+  .price-card.recommended::before { content: 'Рекомендуем'; position: absolute; top: 20px; right: 20px; background: var(--lime); color: #000; font-family: 'Unbounded', sans-serif; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+  .price-name { font-family: 'Unbounded', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+  .price-amount { font-family: 'Unbounded', sans-serif; font-size: 44px; font-weight: 900; color: var(--lime); line-height: 1; }
+  .price-unit { font-size: 14px; color: var(--gray); margin-bottom: 6px; }
+  .price-for { font-size: 14px; color: #ccc; margin-bottom: 24px; }
+  .price-highlight {
+    background: var(--lime); color: #000; border-radius: 8px; padding: 8px 14px;
+    font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 20px;
+  }
+  .price-features { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+  .price-feat { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; }
+  .price-feat::before { content: '✓'; color: var(--lime); font-weight: 700; flex-shrink: 0; }
+  .price-feat.full-row { grid-column: 1 / -1; }
+  .price-indiv { font-size: 12px; color: var(--gray); margin-bottom: 20px; padding: 10px; background: var(--bg3); border-radius: 8px; }
+
+  /* ── WEBINAR ── */
+  .webinar-banner {
+    background: linear-gradient(135deg, #1a1a1a 60%, #1f2a0a);
+    border: 1px solid var(--lime); border-radius: 20px; padding: 40px;
+    display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+  }
+  .webinar-badge { background: var(--lime); color: #000; font-family: 'Unbounded', sans-serif; font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 6px; display: inline-block; margin-bottom: 12px; }
+  .webinar-title { font-family: 'Unbounded', sans-serif; font-size: 26px; font-weight: 900; margin-bottom: 8px; }
+  .webinar-desc { font-size: 15px; color: var(--gray); margin-bottom: 24px; }
+  .webinar-points { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+  .webinar-points li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; }
+  .webinar-points li::before { content: '✓'; color: var(--lime); font-weight: 700; }
+  .webinar-schedule { text-align: center; }
+  .webinar-days { display: flex; flex-direction: column; gap: 8px; }
+  .webinar-day {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 20px; font-size: 13px; font-weight: 600; white-space: nowrap;
+  }
+  .webinar-day.active { border-color: var(--lime); color: var(--lime); }
+
+  /* ── FREE GUIDE ── */
+  .guide-section {
+    background: var(--lime); border-radius: 20px;
+    padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  }
+  .guide-left h2 { color: #000; margin-bottom: 12px; }
+  .guide-left p { color: #333; font-size: 15px; margin-bottom: 20px; }
+  .guide-perks { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .guide-perks li { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #000; }
+  .guide-perks li::before { content: '✓'; font-weight: 900; }
+  .guide-form { background: #000; border-radius: 16px; padding: 32px; }
+  .guide-form h3 { font-family: 'Unbounded', sans-serif; font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .guide-form p { font-size: 13px; color: var(--gray); margin-bottom: 20px; }
+  .form-field { margin-bottom: 14px; }
+  .form-field input {
+    width: 100%; background: var(--card2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; color: var(--white);
+    font-family: 'Manrope', sans-serif; font-size: 14px; outline: none;
+    transition: border-color .2s;
+  }
+  .form-field input:focus { border-color: var(--lime); }
+  .form-field input::placeholder { color: #555; }
+  .form-submit {
+    width: 100%; background: var(--lime); color: #000;
+    font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 700;
+    padding: 14px; border-radius: 10px; border: none; cursor: pointer;
+    transition: transform .15s; margin-top: 4px;
+  }
+  .form-submit:hover { transform: translateY(-1px); }
+  .form-privacy { font-size: 11px; color: #555; margin-top: 10px; text-align: center; }
+
+  /* ── CONSULT ── */
+  .consult-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .consult-form-wrap { background: var(--card); border-radius: 20px; padding: 36px; border: 1px solid var(--border); }
+  .consult-form-wrap h3 { font-family: 'Unbounded', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .consult-form-wrap p { font-size: 14px; color: var(--gray); margin-bottom: 24px; }
+  .consult-benefits { display: flex; flex-direction: column; gap: 20px; }
+  .consult-benefit { display: flex; align-items: flex-start; gap: 16px; }
+  .consult-icon { width: 48px; height: 48px; background: var(--lime); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .consult-benefit-text h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .consult-benefit-text p { font-size: 13px; color: var(--gray); }
+
+  /* ── CHATBOT ── */
+  .chatbot-btn {
+    position: fixed; bottom: 24px; right: 24px; z-index: 200;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--lime); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; box-shadow: 0 4px 20px rgba(170,255,0,.35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .chatbot-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(170,255,0,.5); }
+  .chatbot-window {
+    position: fixed; bottom: 100px; right: 24px; z-index: 200;
+    width: 340px; max-height: 480px;
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 20px;
+    display: none; flex-direction: column; overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0,0,0,.5);
+  }
+  .chatbot-window.open { display: flex; }
+  .chat-header {
+    background: var(--lime); padding: 16px 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .chat-avatar { width: 36px; height: 36px; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .chat-header-info h4 { font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 700; color: #000; }
+  .chat-header-info p { font-size: 11px; color: #333; }
+  .chat-close { margin-left: auto; background: none; border: none; font-size: 20px; cursor: pointer; color: #000; }
+  .chat-messages { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+  .chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.45; }
+  .chat-msg.bot { background: var(--card2); color: var(--white); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .chat-msg.user { background: var(--lime); color: #000; align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 600; }
+  .chat-quick { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 12px; }
+  .quick-btn { background: var(--card2); border: 1px solid var(--lime); color: var(--lime); font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: background .15s; }
+  .quick-btn:hover { background: var(--lime); color: #000; }
+  .chat-input-area { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--border); }
+  .chat-input {
+    flex: 1; background: var(--card2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 14px; color: var(--white); font-family: 'Manrope', sans-serif; font-size: 13px; outline: none;
+  }
+  .chat-input:focus { border-color: var(--lime); }
+  .chat-send { background: var(--lime); border: none; border-radius: 10px; width: 38px; height: 38px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); padding: 40px 24px;
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo { font-family: 'Unbounded', sans-serif; font-size: 18px; font-weight: 900; }
+  .footer-logo span { color: var(--lime); }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-links a { color: var(--gray); text-decoration: none; font-size: 13px; transition: color .2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { color: #555; font-size: 12px; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(0,0,0,.8); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 20px;
+    padding: 40px; max-width: 480px; width: 100%; position: relative;
+  }
+  .modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 22px; color: var(--gray); cursor: pointer; }
+  .modal h3 { font-family: 'Unbounded', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .modal p { font-size: 14px; color: var(--gray); margin-bottom: 24px; }
+  .modal-success { display: none; text-align: center; padding: 20px 0; }
+  .modal-success .check { font-size: 56px; margin-bottom: 16px; }
+  .modal-success h3 { margin-bottom: 8px; }
+  .modal-success p { margin-bottom: 0; }
+
+  /* ── UPSELL BANNER (inside basic course) ── */
+  .upsell-banner {
+    background: linear-gradient(135deg, #1a2000 0%, #0f1a00 100%);
+    border: 2px solid var(--lime); border-radius: 16px; padding: 28px 32px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    flex-wrap: wrap; margin-top: 32px;
+  }
+  .upsell-text .tag { background: var(--lime); color: #000; font-family: 'Unbounded', sans-serif; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 8px; }
+  .upsell-text h4 { font-family: 'Unbounded', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .upsell-text p { font-size: 13px; color: var(--gray); }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+  .tab-btn {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 20px; color: var(--gray); font-family: 'Manrope', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s;
+  }
+  .tab-btn.active { background: var(--lime); color: #000; border-color: var(--lime); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 90px; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+    .tools-grid { grid-template-columns: 1fr; }
+    .course-header { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .webinar-banner { grid-template-columns: 1fr; }
+    .guide-section { grid-template-columns: 1fr; padding: 32px 24px; }
+    .consult-grid { grid-template-columns: 1fr; }
+    .price-features { grid-template-columns: 1fr; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .upsell-banner { flex-direction: column; }
+    .stats-mini { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .why-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 30px; }
+    .timer-boxes { gap: 4px; }
+    .tbox-num { font-size: 22px; }
+    section { padding: 56px 16px; }
+    .guide-section { padding: 28px 20px; }
+    .consult-form-wrap { padding: 24px; }
+    .modal { padding: 28px 20px; }
+    .chatbot-window { width: calc(100vw - 32px); right: 16px; }
+  }
+
+  /* Animate in */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s, transform .6s; }
+  .fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AI <span>Booster</span></div>
+  <div class="nav-links">
+    <a href="#why">Почему сейчас</a>
+    <a href="#tools">ИИ-инструменты</a>
+    <a href="#basic-course">Базовый курс</a>
+    <a href="#big-course">Большой практикум</a>
+    <a href="#webinar">Вебинар</a>
+    <a href="#consult">Консультация</a>
+  </div>
+  <a href="#consult" class="nav-cta">Оставить заявку</a>
+  <button class="hamburger" onclick="toggleMenu(this)" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div style="padding-top:0">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">🎓 Программа ДПО · ИТМО 2026</div>
+      <h1>AI <span class="accent">Booster</span></h1>
+      <div class="hero-sub">Обучение + Внедрение ИИ для вашего бизнеса</div>
+      <p class="hero-desc">Программа дополнительного профессионального образования от Факультета Технологического Менеджмента и Инноваций Университета ИТМО. Ваша команда начинает применять ИИ с первого модуля.</p>
+      <div class="hero-btns">
+        <a href="#basic-course" class="btn-primary">Начать с базового курса</a>
+        <a href="#consult" class="btn-secondary">Бесплатная консультация</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="timer-card">
+        <div class="timer-label">⚡ Акция ограничена</div>
+        <div class="timer-title">Скидка 20% на первый поток</div>
+        <div class="timer-boxes">
+          <div class="tbox"><div class="tbox-num" id="t-d">07</div><div class="tbox-lbl">дней</div></div>
+          <div class="tbox"><div class="tbox-num" id="t-h">14</div><div class="tbox-lbl">часов</div></div>
+          <div class="tbox"><div class="tbox-num" id="t-m">32</div><div class="tbox-lbl">минут</div></div>
+          <div class="tbox"><div class="tbox-num" id="t-s">09</div><div class="tbox-lbl">секунд</div></div>
+        </div>
+        <div class="discount-tag">🎯 Малый практикум: <s>375 000 ₽</s> → 300 000 ₽</div>
+      </div>
+      <div class="stats-mini">
+        <div class="stat-card"><div class="stat-num">5</div><div class="stat-txt">тематических блоков</div></div>
+        <div class="stat-card"><div class="stat-num">32ч</div><div class="stat-txt">проектной работы</div></div>
+        <div class="stat-card"><div class="stat-num">100%</div><div class="stat-txt">практики</div></div>
+        <div class="stat-card"><div class="stat-num">∞</div><div class="stat-txt">поддержка команды</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY NOW -->
+<section id="why" class="fade-in">
+  <div class="section-label">Почему сейчас</div>
+  <h2 class="section-title">ИИ уже меняет бизнес</h2>
+  <p class="section-desc">Рынок не ждёт. Компании, которые внедряют ИИ сегодня, получают преимущество завтра.</p>
+  <div class="why-grid">
+    <div class="why-card" data-n="1"><div class="why-num">70%</div><div class="why-text"><strong>крупных компаний</strong> уже используют ИИ хотя бы в одной функции бизнеса</div></div>
+    <div class="why-card" data-n="2"><div class="why-num">34%</div><div class="why-text">компаний уже внедряют ИИ, ещё <strong>46% планируют</strong> внедрение в ближайшие годы</div></div>
+    <div class="why-card" data-n="3"><div class="why-num">+20%</div><div class="why-text">рост производительности компании получают при <strong>грамотном внедрении ИИ</strong></div></div>
+    <div class="why-card" data-n="4"><div class="why-num">25–30%</div><div class="why-text">в год <strong>растёт рынок ИИ в России</strong> — самый быстрорастущий сектор</div></div>
+    <div class="why-card" data-n="5"><div class="why-num">300 млрд</div><div class="why-text">рублей — объём рынка ИИ в России и продолжает расти</div></div>
+    <div class="why-card" data-n="6"><div class="why-num">Дефицит</div><div class="why-text">Ключевой барьер внедрения — <strong>нехватка специалистов</strong> и экспертизы</div></div>
+  </div>
+  <div class="why-banner" style="margin-top:16px">
+    <div class="why-banner-icon">ℹ️</div>
+    <div class="why-banner-text">ИИ уже активно внедряется в бизнес, но компании сталкиваются с нехваткой компетенций — это создаёт высокий спрос на практико-ориентированное обучение и внедрение.</div>
+  </div>
+</section>
+
+<!-- AI TOOLS -->
+<section id="tools" class="fade-in">
+  <div class="section-label">ИИ-стек практикума</div>
+  <h2 class="section-title">С какими нейросетями учим работать</h2>
+  <p class="section-desc">Обучаем не одной модели, а связке инструментов под задачи команды: текст, поиск, код, медиа и безопасный РФ-контур.</p>
+  <div class="tools-grid">
+    <div class="tools-col">
+      <div class="tools-col-head">
+        <div class="tools-col-icon">💬</div>
+        <div><div class="tools-col-name">Текстовые ИИ-модели</div><div class="tools-col-sub">Чат, аналитика, документы, переписка, отчёты</div></div>
+      </div>
+      <div class="tool-item"><div class="tool-logo">🤖</div><div class="tool-info">ChatGPT <small>OpenAI</small></div></div>
+      <div class="tool-item"><div class="tool-logo">🧠</div><div class="tool-info">Claude <small>Anthropic</small></div></div>
+      <div class="tool-item"><div class="tool-logo">♊</div><div class="tool-info">Gemini <small>Google</small></div></div>
+      <div class="tool-item"><div class="tool-logo">🐋</div><div class="tool-info">DeepSeek <small>DeepSeek AI</small></div></div>
+    </div>
+    <div class="tools-col">
+      <div class="tools-col-head">
+        <div class="tools-col-icon">🛡️</div>
+        <div><div class="tools-col-name">Российский контур</div><div class="tools-col-sub">Безопасный режим работы с чувствительными данными РФ</div></div>
+      </div>
+      <div class="tool-item"><div class="tool-logo">🇷🇺</div><div class="tool-info">GigaChat <small>Сбер</small></div></div>
+      <div class="tool-item"><div class="tool-logo">🅨</div><div class="tool-info">YandexGPT <small>Яндекс</small></div></div>
+    </div>
+    <div class="tools-col">
+      <div class="tools-col-head">
+        <div class="tools-col-icon">🔍</div>
+        <div><div class="tools-col-name">Поиск и анализ</div><div class="tools-col-sub">Глубокий ресёрч, конкуренты, факты со ссылками</div></div>
+      </div>
+      <div class="tool-item"><div class="tool-logo">🔮</div><div class="tool-info">Perplexity <small>Perplexity AI</small></div></div>
+      <div class="tool-item"><div class="tool-logo">🔍</div><div class="tool-info">ChatGPT Search <small>OpenAI</small></div></div>
+      <div class="tool-item"><div class="tool-logo">📓</div><div class="tool-info">NotebookLM <small>Google</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BASIC COURSE -->
+<div class="course-section" id="basic-course">
+  <div class="inner">
+    <div style="margin-bottom:48px">
+      <div class="section-label">Базовый курс</div>
+      <h2 class="section-title">Введение в ИИ</h2>
+      <p class="section-desc">Первый шаг к системному использованию ИИ в вашей команде. Практика с первого занятия, реальные задачи вашего бизнеса.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('basic','program')">Программа</button>
+      <button class="tab-btn" onclick="switchTab('basic','about')">О курсе</button>
+      <button class="tab-btn" onclick="switchTab('basic','result')">Результат</button>
+    </div>
+
+    <div id="basic-program" class="tab-content active">
+      <div class="course-header">
+        <div>
+          <div class="course-tag">Базовый курс</div>
+          <h3 style="font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;margin-bottom:8px">3 модуля под вашу функцию</h3>
+          <div class="course-price">от 50 000 ₽ <small>/ участник</small></div>
+          <div class="course-target">HR, маркетинг и функциональные команды (5–10 чел.)</div>
+          <ul class="course-features">
+            <li>3 модуля под одну функцию бизнеса</li>
+            <li>Реальная задача за ~2 часа на модуле</li>
+            <li>Первый измеримый эффект за цикл практикума</li>
+            <li>Доступ к пробному уроку на платформе</li>
+            <li>Сопровождение куратора</li>
+          </ul>
+          <div class="course-btns">
+            <button class="btn-primary" onclick="openModal('trial')">▶ Пробный урок бесплатно</button>
+            <button class="btn-secondary" onclick="openModal('consult-modal')">Записаться на курс</button>
+          </div>
+        </div>
+        <div>
+          <div class="course-modules" id="basic-modules">
+            <div class="module-row" onclick="toggleModule('bm1')">
+              <div class="module-num">1</div>
+              <div><div class="module-label">Модуль 1</div><div class="module-title">Основы работы с ИИ-инструментами</div></div>
+              <div class="module-expand" id="bm1-icon">+</div>
+            </div>
+            <div class="module-detail" id="bm1">
+              <ul>
+                <li>Обзор ключевых ИИ-инструментов: ChatGPT, Claude, Gemini</li>
+                <li>Принципы промптинга для бизнес-задач</li>
+                <li>Разбираем кейс вашей команды на практике</li>
+              </ul>
+            </div>
+            <div class="module-row" onclick="toggleModule('bm2')">
+              <div class="module-num">2</div>
+              <div><div class="module-label">Модуль 2</div><div class="module-title">ИИ в вашем рабочем процессе</div></div>
+              <div class="module-expand" id="bm2-icon">+</div>
+            </div>
+            <div class="module-detail" id="bm2">
+              <ul>
+                <li>Автоматизация рутинных задач с помощью ИИ</li>
+                <li>Шаблоны и цепочки запросов для вашей функции</li>
+                <li>Практикум: разбор реального документа/задачи</li>
+              </ul>
+            </div>
+            <div class="module-row" onclick="toggleModule('bm3')">
+              <div class="module-num">3</div>
+              <div><div class="module-label">Модуль 3</div><div class="module-title">Измеримый результат и внедрение</div></div>
+              <div class="module-expand" id="bm3-icon">+</div>
+            </div>
+            <div class="module-detail" id="bm3">
+              <ul>
+                <li>Как оценить эффект от ИИ в команде</li>
+                <li>Матрица инструментов для вашей функции</li>
+                <li>Итоговый артефакт: рабочий сценарий использования ИИ</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="basic-about" class="tab-content">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px">
+        <div class="why-card" data-n=""><div class="why-num">⏱️</div><div class="why-text"><strong>~2 часа</strong> на каждый модуль, без отрыва от работы</div></div>
+        <div class="why-card" data-n=""><div class="why-num">👥</div><div class="why-text"><strong>До 20 участников</strong> — очный формат, работа в группах</div></div>
+        <div class="why-card" data-n=""><div class="why-num">🏆</div><div class="why-text"><strong>Университет ИТМО</strong> — лидер подготовки ИИ-специалистов</div></div>
+        <div class="why-card" data-n=""><div class="why-num">📜</div><div class="why-text"><strong>Сертификат</strong> установленного образца по итогам обучения</div></div>
+      </div>
+    </div>
+
+    <div id="basic-result" class="tab-content">
+      <div class="why-banner" style="margin-bottom:24px">
+        <div class="why-banner-icon">🎯</div>
+        <div class="why-banner-text">После базового курса ваша команда применяет ИИ-инструменты для решения реальных рабочих задач — уже с первой недели.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+        <div class="price-feat" style="background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--border);">Готовый сценарий применения ИИ в вашей функции</div>
+        <div class="price-feat" style="background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--border);">Библиотека промптов для повседневных задач</div>
+        <div class="price-feat" style="background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--border);">Навык быстрой оценки ИИ-инструментов под задачу</div>
+        <div class="price-feat" style="background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--border);">Понимание рисков и ограничений ИИ в РФ-контуре</div>
+      </div>
+    </div>
+
+    <!-- UPSELL -->
+    <div class="upsell-banner">
+      <div class="upsell-text">
+        <div class="tag">⬆ Следующий шаг</div>
+        <h4>Готовы к системному внедрению?</h4>
+        <p>Большой практикум — 6 модулей по всем функциям бизнеса с измеримым ROI</p>
+      </div>
+      <a href="#big-course" class="btn-primary">Узнать о большом практикуме →</a>
+    </div>
+  </div>
+</div>
+
+<!-- BIG COURSE -->
+<div class="course-section" id="big-course" style="margin-top:0;border-top:2px solid var(--lime)">
+  <div class="inner">
+    <div style="margin-bottom:48px">
+      <div class="section-label" style="color:var(--lime)">Большой практикум · Рекомендуем</div>
+      <h2 class="section-title">Стратегическое внедрение ИИ</h2>
+      <p class="section-desc">Сквозная программа для собственников и руководителей функций. 6 модулей — полное покрытие ключевых направлений бизнеса.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('big','program')">Программа</button>
+      <button class="tab-btn" onclick="switchTab('big','about')">О практикуме</button>
+      <button class="tab-btn" onclick="switchTab('big','result')">Результат</button>
+    </div>
+
+    <div id="big-program" class="tab-content active">
+      <div class="course-header">
+        <div>
+          <div class="course-tag" style="background:#000;color:var(--lime);border:1px solid var(--lime)">Рекомендуем</div>
+          <h3 style="font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;margin-bottom:8px">6 модулей по ключевым направлениям</h3>
+          <div class="course-price">600 000 ₽ <small>/ компания (5–10 чел.)</small></div>
+          <div class="course-target">Собственники и руководители функций</div>
+          <div style="background:var(--lime);color:#000;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;margin-bottom:20px">👥 ~100 000 ₽ за модуль с прикладным результатом</div>
+          <ul class="course-features">
+            <li>6 модулей по ключевым направлениям бизнеса</li>
+            <li>Артефакты и KPI по каждой функции</li>
+            <li>Единая логика внедрения и контроля</li>
+            <li>Масштабирование без потери управляемости</li>
+            <li>Персональный менеджер для вашей компании</li>
+          </ul>
+          <div class="course-btns">
+            <button class="btn-primary" onclick="openModal('consult-modal')">Забронировать место</button>
+            <button class="btn-secondary" onclick="openModal('big-detail')">Подробнее о программе</button>
+          </div>
+        </div>
+        <div>
+          <div class="course-modules">
+            <div class="module-row" onclick="toggleModule('m1')">
+              <div class="module-num">1</div>
+              <div><div class="module-label">Модуль 1</div><div class="module-title">Финучёт: дашборды из Google/Excel с помощью ИИ</div></div>
+              <div class="module-expand" id="m1-icon">+</div>
+            </div>
+            <div class="module-detail" id="m1"><ul><li>Собираете черновой план финансового дашборда</li><li>Проверяете ключевые гипотезы и метрики</li><li>Артефакт: рабочий дашборд с автоматическим обновлением</li></ul></div>
+
+            <div class="module-row" onclick="toggleModule('m2')">
+              <div class="module-num">2</div>
+              <div><div class="module-label">Модуль 2</div><div class="module-title">Маркетинг: SEO-аудит и анализ конкурентов</div></div>
+              <div class="module-expand" id="m2-icon">+</div>
+            </div>
+            <div class="module-detail" id="m2"><ul><li>Полный SEO-аудит сайта с помощью ИИ за 2 часа</li><li>Матрица конкурентов с автоматическим мониторингом</li><li>Артефакт: аналитический отчёт и план действий</li></ul></div>
+
+            <div class="module-row" onclick="toggleModule('m3')">
+              <div class="module-num">3</div>
+              <div><div class="module-label">Модуль 3</div><div class="module-title">PR: контент и репутационные риски</div></div>
+              <div class="module-expand" id="m3-icon">+</div>
+            </div>
+            <div class="module-detail" id="m3"><ul><li>Контент-план на квартал с помощью ИИ</li><li>Система мониторинга репутационных угроз</li><li>Артефакт: редакционная политика + контент-машина</li></ul></div>
+
+            <div class="module-row" onclick="toggleModule('m4')">
+              <div class="module-num">4</div>
+              <div><div class="module-label">Модуль 4</div><div class="module-title">HR: анализ интервью и сравнение кандидатов</div></div>
+              <div class="module-expand" id="m4-icon">+</div>
+            </div>
+            <div class="module-detail" id="m4"><ul><li>Автоматический разбор записей интервью</li><li>Матрица сравнения кандидатов по компетенциям</li><li>Артефакт: система найма с ИИ-фильтрацией</li></ul></div>
+
+            <div class="module-row" onclick="toggleModule('m5')">
+              <div class="module-num">5</div>
+              <div><div class="module-label">Модуль 5</div><div class="module-title">Стратегия: запуск новых юнитов и unit-экономика</div></div>
+              <div class="module-expand" id="m5-icon">+</div>
+            </div>
+            <div class="module-detail" id="m5"><ul><li>Собираете черновой план запуска нового направления</li><li>Проверяете unit-экономику и ключевые гипотезы</li><li>Формируете список stop/go критериев для руководства</li><li>Артефакт: draft стратегии с расчётной моделью</li></ul></div>
+
+            <div class="module-row" onclick="toggleModule('m6')">
+              <div class="module-num">6</div>
+              <div><div class="module-label">Модуль 6</div><div class="module-title">Продажи и операционка: сценарии быстрого ROI</div></div>
+              <div class="module-expand" id="m6-icon">+</div>
+            </div>
+            <div class="module-detail" id="m6"><ul><li>Автоматизация воронки продаж с ИИ</li><li>Сценарии быстрого ROI в операционных процессах</li><li>Артефакт: карта внедрения ИИ по всей компании</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="big-about" class="tab-content">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px">
+        <div class="why-card" data-n=""><div class="why-num">6</div><div class="why-text"><strong>модулей</strong> по всем ключевым функциям бизнеса</div></div>
+        <div class="why-card" data-n=""><div class="why-num">56ч</div><div class="why-text"><strong>академических часов</strong> практической работы</div></div>
+        <div class="why-card" data-n=""><div class="why-num">KPI</div><div class="why-text">Артефакты и <strong>измеримые KPI</strong> по каждой функции</div></div>
+        <div class="why-card" data-n=""><div class="why-num">ROI</div><div class="why-text">Единая логика внедрения с <strong>контролем результата</strong></div></div>
+      </div>
+    </div>
+
+    <div id="big-result" class="tab-content">
+      <div class="why-banner" style="margin-bottom:24px">
+        <div class="why-banner-icon">🏆</div>
+        <div class="why-banner-text">После большого практикума ваша компания работает по единой ИИ-стратегии с измеримыми KPI по каждой функции и готова к масштабированию.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+        <div class="price-feat" style="background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--lime);">6 готовых артефактов по функциям бизнеса</div>
+        <div class="price-feat" style="background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--lime);">Единая карта внедрения ИИ в компании</div>
+        <div class="price-feat" style="background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--lime);">KPI-система для управления ИИ-результатами</div>
+        <div class="price-feat" style="background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--lime);">Готовность к масштабированию без хаоса</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section class="fade-in">
+  <div class="section-label">Тарифы</div>
+  <h2 class="section-title">Выберите формат внедрения</h2>
+  <p class="section-desc">Стартуйте с пилота или запускайте сквозную модель по ключевым функциям бизнеса</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Малый практикум</div>
+      <div class="price-amount">300 000 ₽</div>
+      <div class="price-unit">/ компания (5–10 чел.)</div>
+      <div class="price-for">HR, маркетинг и функциональные команды</div>
+      <div class="price-features">
+        <div class="price-feat">3 модуля под одну функцию</div>
+        <div class="price-feat">Реальная задача за ~2 часа</div>
+        <div class="price-feat">Первый измеримый эффект</div>
+        <div class="price-feat price-full-row">Индивидуально в группе: 50 000 ₽/участник</div>
+      </div>
+      <div class="price-indiv">💡 Можно записать отдельных участников по 50 000 ₽/чел.</div>
+      <button class="btn-secondary" style="width:100%" onclick="openModal('consult-modal')">Подробнее и записаться →</button>
+    </div>
+    <div class="price-card recommended">
+      <div class="price-name">Большой практикум</div>
+      <div class="price-amount">600 000 ₽</div>
+      <div class="price-unit">/ компания (5–10 чел.)</div>
+      <div class="price-for">Собственники и руководители функций</div>
+      <div class="price-highlight">👥 ~100 000 ₽ за модуль с прикладным результатом</div>
+      <div class="price-features">
+        <div class="price-feat">6 модулей по ключевым направлениям</div>
+        <div class="price-feat">Единая логика внедрения</div>
+        <div class="price-feat">Артефакты и KPI по каждой функции</div>
+        <div class="price-feat">Масштабирование без потери управляемости</div>
+      </div>
+      <button class="btn-primary" style="width:100%" onclick="openModal('consult-modal')">Забронировать место</button>
+    </div>
+  </div>
+</section>
+
+<!-- WEBINAR -->
+<section id="webinar" class="fade-in" style="padding-top:0">
+  <div class="webinar-banner">
+    <div>
+      <div class="webinar-badge">🎓 Бесплатно</div>
+      <div class="webinar-title">Бесплатный вебинар каждую неделю</div>
+      <div class="webinar-desc">Разбираем, как ИИ уже меняет бизнес — на реальных кейсах. Без воды, с практикой.</div>
+      <ul class="webinar-points">
+        <li>Как начать внедрять ИИ, даже если команда не готова</li>
+        <li>Топ-5 сценариев ИИ с быстрым ROI</li>
+        <li>Разбор вашего кейса в прямом эфире</li>
+        <li>Q&A с экспертами ИТМО</li>
+      </ul>
+      <button class="btn-primary" onclick="openModal('webinar-modal')">Зарегистрироваться на вебинар</button>
+    </div>
+    <div class="webinar-schedule">
+      <div style="font-size:13px;font-weight:700;color:var(--gray);margin-bottom:12px">БЛИЖАЙШИЕ ДАТЫ</div>
+      <div class="webinar-days">
+        <div class="webinar-day active">🟢 Вторник, 18:00 МСК</div>
+        <div class="webinar-day">Четверг, 18:00 МСК</div>
+        <div class="webinar-day">Суббота, 11:00 МСК</div>
+      </div>
+      <div style="font-size:12px;color:var(--gray);margin-top:12px">Запись доступна после регистрации</div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE GUIDE -->
+<section class="fade-in" style="padding-top:0">
+  <div class="guide-section">
+    <div class="guide-left">
+      <h2 style="font-size:clamp(22px,3vw,32px)">Бесплатный гайд по ИИ-продуктам для бизнеса</h2>
+      <p>Получите подборку лучших ИИ-инструментов 2026 года с разбором по задачам бизнеса — совершенно бесплатно.</p>
+      <ul class="guide-perks">
+        <li>Топ-20 ИИ-инструментов для бизнеса</li>
+        <li>Сравнение по задачам: HR, маркетинг, финансы</li>
+        <li>Примеры промптов для каждого инструмента</li>
+        <li>Чек-лист готовности к внедрению ИИ</li>
+      </ul>
+    </div>
+    <div class="guide-form">
+      <h3>Получить гайд бесплатно</h3>
+      <p>Оставьте контакты — пришлём на почту мгновенно</p>
+      <div class="form-field"><input type="text" placeholder="Ваше имя" id="guide-name"></div>
+      <div class="form-field"><input type="email" placeholder="Email" id="guide-email"></div>
+      <div class="form-field"><input type="tel" placeholder="Телефон" id="guide-phone"></div>
+      <button class="form-submit" onclick="submitGuide()">Получить гайд →</button>
+      <div class="form-privacy">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONSULT -->
+<section id="consult" class="fade-in" style="padding-top:40px">
+  <div class="consult-grid">
+    <div>
+      <div class="section-label">Бесплатно</div>
+      <h2 class="section-title">Помогаем выбрать формат</h2>
+      <p class="section-desc" style="margin-bottom:36px">Расскажите о вашем бизнесе — наш эксперт подберёт оптимальный формат обучения и рассчитает ROI.</p>
+      <div class="consult-benefits">
+        <div class="consult-benefit">
+          <div class="consult-icon">🎯</div>
+          <div class="consult-benefit-text"><h4>Диагностика бизнеса</h4><p>Выявим, где ИИ даст максимальный эффект именно в вашей компании</p></div>
+        </div>
+        <div class="consult-benefit">
+          <div class="consult-icon">📊</div>
+          <div class="consult-benefit-text"><h4>Расчёт ROI</h4><p>Покажем потенциальную экономию и рост эффективности в цифрах</p></div>
+        </div>
+        <div class="consult-benefit">
+          <div class="consult-icon">🗓️</div>
+          <div class="consult-benefit-text"><h4>План внедрения</h4><p>Получите дорожную карту внедрения ИИ под ваши задачи</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="consult-form-wrap">
+      <h3>Оставить заявку</h3>
+      <p>Ответим в течение 2 часов в рабочее время</p>
+      <div class="form-field"><input type="text" placeholder="Ваше имя" id="c-name"></div>
+      <div class="form-field"><input type="tel" placeholder="Телефон" id="c-phone"></div>
+      <div class="form-field"><input type="email" placeholder="Email" id="c-email"></div>
+      <div class="form-field"><input type="text" placeholder="Компания и должность" id="c-company"></div>
+      <button class="btn-primary" style="width:100%;text-align:center" onclick="submitConsult()">Получить консультацию →</button>
+      <div class="form-privacy" style="margin-top:12px">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AI <span>Booster</span> · ИТМО</div>
+  <div class="footer-links">
+    <a href="#why">О программе</a>
+    <a href="#basic-course">Базовый курс</a>
+    <a href="#big-course">Большой практикум</a>
+    <a href="#webinar">Вебинар</a>
+    <a href="#consult">Контакты</a>
+  </div>
+  <div class="footer-copy">© 2026 AI Booster · ФТМИ ИТМО</div>
+</footer>
+
+<!-- CHATBOT -->
+<button class="chatbot-btn" onclick="toggleChat()" aria-label="Чат с нами">💬</button>
+<div class="chatbot-window" id="chatbot">
+  <div class="chat-header">
+    <div class="chat-avatar">🤖</div>
+    <div class="chat-header-info"><h4>AI Booster Ассистент</h4><p>Отвечаем мгновенно</p></div>
+    <button class="chat-close" onclick="toggleChat()">×</button>
+  </div>
+  <div class="chat-messages" id="chat-msgs">
+    <div class="chat-msg bot">Привет! 👋 Я помогу выбрать подходящий формат обучения ИИ для вашего бизнеса. С чего начнём?</div>
+  </div>
+  <div class="chat-quick" id="chat-quick">
+    <button class="quick-btn" onclick="quickMsg('Какие курсы есть?')">📚 Курсы</button>
+    <button class="quick-btn" onclick="quickMsg('Сколько стоит?')">💰 Цены</button>
+    <button class="quick-btn" onclick="quickMsg('Хочу на вебинар')">🎓 Вебинар</button>
+    <button class="quick-btn" onclick="quickMsg('Нужна консультация')">📞 Консультация</button>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chat-in" placeholder="Напишите вопрос..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-trial" onclick="closeModal('trial',event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('trial')">×</button>
+    <div id="trial-form-content">
+      <h3>Пробный урок бесплатно</h3>
+      <p>Оставьте контакты — пришлём доступ к пробному уроку на платформе</p>
+      <div class="form-field"><input type="text" placeholder="Имя" id="tr-name"></div>
+      <div class="form-field"><input type="email" placeholder="Email" id="tr-email"></div>
+      <button class="btn-primary" style="width:100%;text-align:center" onclick="submitTrial()">Получить доступ →</button>
+    </div>
+    <div class="modal-success" id="trial-success">
+      <div class="check">✅</div>
+      <h3>Доступ отправлен!</h3>
+      <p style="color:var(--gray)">Проверьте почту — письмо придёт в течение 5 минут</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-consult-modal" onclick="closeModal('consult-modal',event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('consult-modal')">×</button>
+    <div id="consult-modal-form-content">
+      <h3>Записаться на курс</h3>
+      <p>Оставьте заявку — менеджер свяжется в течение 2 часов</p>
+      <div class="form-field"><input type="text" placeholder="Имя" id="cm-name"></div>
+      <div class="form-field"><input type="tel" placeholder="Телефон" id="cm-phone"></div>
+      <div class="form-field"><input type="email" placeholder="Email" id="cm-email"></div>
+      <button class="btn-primary" style="width:100%;text-align:center" onclick="submitModal('consult-modal')">Отправить заявку →</button>
+    </div>
+    <div class="modal-success" id="consult-modal-success">
+      <div class="check">✅</div>
+      <h3>Заявка принята!</h3>
+      <p style="color:var(--gray)">Менеджер свяжется с вами в течение 2 часов</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-webinar-modal" onclick="closeModal('webinar-modal',event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('webinar-modal')">×</button>
+    <div id="webinar-modal-form-content">
+      <h3>Зарегистрироваться на вебинар</h3>
+      <p>Бесплатный вебинар каждую неделю — выберите удобное время</p>
+      <div class="form-field"><input type="text" placeholder="Имя" id="wb-name"></div>
+      <div class="form-field"><input type="email" placeholder="Email" id="wb-email"></div>
+      <div class="form-field">
+        <select id="wb-time" style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;color:var(--white);font-family:'Manrope',sans-serif;font-size:14px;outline:none">
+          <option value="" style="background:#1e1e1e">Выберите время</option>
+          <option value="tue" style="background:#1e1e1e">Вторник 18:00 МСК</option>
+          <option value="thu" style="background:#1e1e1e">Четверг 18:00 МСК</option>
+          <option value="sat" style="background:#1e1e1e">Суббота 11:00 МСК</option>
+        </select>
+      </div>
+      <button class="btn-primary" style="width:100%;text-align:center" onclick="submitModal('webinar-modal')">Зарегистрироваться →</button>
+    </div>
+    <div class="modal-success" id="webinar-modal-success">
+      <div class="check">✅</div>
+      <h3>Вы зарегистрированы!</h3>
+      <p style="color:var(--gray)">Ссылка на вебинар придёт на почту за час до начала</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-big-detail" onclick="closeModal('big-detail',event)">
+  <div class="modal" style="max-width:560px">
+    <button class="modal-close" onclick="closeModal('big-detail')">×</button>
+    <h3>Большой практикум</h3>
+    <p>Полная программа для системного внедрения ИИ по всем функциям бизнеса</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+      <div class="module-row" style="cursor:default"><div class="module-num">1</div><div><div class="module-label">Модуль 1</div><div class="module-title">Финучёт: дашборды из Google/Excel с помощью ИИ</div></div></div>
+      <div class="module-row" style="cursor:default"><div class="module-num">2</div><div><div class="module-label">Модуль 2</div><div class="module-title">Маркетинг: SEO-аудит и анализ конкурентов</div></div></div>
+      <div class="module-row" style="cursor:default"><div class="module-num">3</div><div><div class="module-label">Модуль 3</div><div class="module-title">PR: контент и репутационные риски</div></div></div>
+      <div class="module-row" style="cursor:default"><div class="module-num">4</div><div><div class="module-label">Модуль 4</div><div class="module-title">HR: анализ интервью и сравнение кандидатов</div></div></div>
+      <div class="module-row" style="cursor:default"><div class="module-num">5</div><div><div class="module-label">Модуль 5</div><div class="module-title">Стратегия: запуск новых юнитов и unit-экономика</div></div></div>
+      <div class="module-row" style="cursor:default"><div class="module-num">6</div><div><div class="module-label">Модуль 6</div><div class="module-title">Продажи и операционка: сценарии быстрого ROI</div></div></div>
+    </div>
+    <button class="btn-primary" style="width:100%;text-align:center" onclick="closeModal('big-detail');openModal('consult-modal')">Забронировать место →</button>
+  </div>
+</div>
+
+<script>
+// ── TIMER ──
+(function(){
+  const end = new Date(Date.now() + 7*24*60*60*1000 + 14*60*60*1000 + 32*60*1000 + 9000);
+  function update(){
+    const d = end - Date.now();
+    if(d<0) return;
+    const days = Math.floor(d/86400000);
+    const hrs  = Math.floor((d%86400000)/3600000);
+    const mins = Math.floor((d%3600000)/60000);
+    const secs = Math.floor((d%60000)/1000);
+    document.getElementById('t-d').textContent = String(days).padStart(2,'0');
+    document.getElementById('t-h').textContent = String(hrs).padStart(2,'0');
+    document.getElementById('t-m').textContent = String(mins).padStart(2,'0');
+    document.getElementById('t-s').textContent = String(secs).padStart(2,'0');
+  }
+  update(); setInterval(update, 1000);
+})();
+
+// ── MODALS ──
+function openModal(id){ document.getElementById('modal-'+id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(id, e){
+  if(e && e.target !== document.getElementById('modal-'+id)) return;
+  document.getElementById('modal-'+id).classList.remove('open');
+  document.body.style.overflow='';
+}
+function submitModal(id){
+  document.getElementById(id+'-form-content').style.display='none';
+  document.getElementById(id+'-success').style.display='block';
+}
+function submitTrial(){ document.getElementById('trial-form-content').style.display='none'; document.getElementById('trial-success').style.display='block'; }
+function submitGuide(){
+  const n=document.getElementById('guide-name').value;
+  const e=document.getElementById('guide-email').value;
+  if(!n||!e){alert('Пожалуйста, заполните имя и email'); return;}
+  document.querySelector('.guide-form').innerHTML='<div style="text-align:center;padding:20px"><div style="font-size:48px;margin-bottom:12px">✅</div><h3 style="color:#fff;margin-bottom:8px">Готово!</h3><p style="color:#aaa">Гайд отправлен на вашу почту</p></div>';
+}
+function submitConsult(){
+  const n=document.getElementById('c-name').value;
+  const p=document.getElementById('c-phone').value;
+  if(!n||!p){alert('Пожалуйста, заполните имя и телефон'); return;}
+  document.querySelector('.consult-form-wrap').innerHTML='<div style="text-align:center;padding:40px 20px"><div style="font-size:56px;margin-bottom:16px">✅</div><h3 style="font-family:Unbounded,sans-serif;margin-bottom:8px">Заявка принята!</h3><p style="color:#aaa">Наш эксперт свяжется с вами в течение 2 часов</p></div>';
+}
+
+// ── MODULES ──
+function toggleModule(id){
+  const el = document.getElementById(id);
+  const icon = document.getElementById(id+'-icon');
+  el.classList.toggle('open');
+  if(icon) icon.textContent = el.classList.contains('open') ? '−' : '+';
+  if(el.classList.contains('open')){
+    el.style.borderTopLeftRadius='0'; el.style.borderTopRightRadius='0';
+    el.previousElementSibling.style.borderBottomLeftRadius='0'; el.previousElementSibling.style.borderBottomRightRadius='0';
+  } else {
+    el.previousElementSibling.style.borderBottomLeftRadius='12px'; el.previousElementSibling.style.borderBottomRightRadius='12px';
+  }
+}
+
+// ── TABS ──
+function switchTab(course, tab){
+  document.querySelectorAll('#'+course+'-program, #'+course+'-about, #'+course+'-result').forEach(el=>el.classList.remove('active'));
+  document.getElementById(course+'-'+tab).classList.add('active');
+  const btns = document.querySelectorAll('[onclick^="switchTab(\''+course+'\'"]');
+  btns.forEach(b=>{
+    b.classList.toggle('active', b.getAttribute('onclick').includes("'"+tab+"'"));
+  });
+}
+
+// ── CHATBOT ──
+const chatResponses = {
+  'какие курсы': 'У нас два формата:\n\n📗 Базовый курс «Введение в ИИ» — 3 модуля под одну функцию. От 50 000 ₽/участник.\n\n📘 Большой практикум — 6 модулей по всем функциям бизнеса. 600 000 ₽/компания.\n\nКакое направление интересует?',
+  'сколько стоит': 'Стоимость:\n\n💼 Малый практикум: 300 000 ₽/компания (5-10 чел.) или 50 000 ₽/участник\n\n🏆 Большой практикум: 600 000 ₽/компания — рекомендуем!\n\nЕсть скидка 20% на первый поток. Хотите записаться?',
+  'вебинар': 'Проводим бесплатные вебинары каждую неделю:\n\n📅 Вторник 18:00 МСК\n📅 Четверг 18:00 МСК\n📅 Суббота 11:00 МСК\n\nЗарегистрироваться можно прямо на сайте ⬆',
+  'консультация': 'Отлично! Заполните форму внизу страницы 👇 или напишите ваш телефон — перезвоним в течение 2 часов.',
+  'default': 'Спасибо за вопрос! Я передам его нашему менеджеру. Хотите, чтобы мы перезвонили? Оставьте телефон или заполните форму консультации внизу страницы.'
+};
+function toggleChat(){ document.getElementById('chatbot').classList.toggle('open'); }
+function quickMsg(text){
+  addChatMsg(text, 'user');
+  document.getElementById('chat-quick').style.display='none';
+  setTimeout(()=>{ const k=Object.keys(chatResponses).find(k=>text.toLowerCase().includes(k)); addChatMsg(chatResponses[k||'default'],'bot'); },600);
+}
+function sendChat(){
+  const inp=document.getElementById('chat-in');
+  const text=inp.value.trim(); if(!text) return;
+  addChatMsg(text,'user'); inp.value='';
+  document.getElementById('chat-quick').style.display='none';
+  setTimeout(()=>{ const k=Object.keys(chatResponses).find(k=>text.toLowerCase().includes(k)); addChatMsg(chatResponses[k||'default'],'bot'); },600);
+}
+function addChatMsg(text,type){
+  const msgs=document.getElementById('chat-msgs');
+  const d=document.createElement('div'); d.className='chat-msg '+type;
+  d.style.whiteSpace='pre-line'; d.textContent=text;
+  msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight;
+}
+
+// ── NAV MOBILE ──
+function toggleMenu(btn){
+  const spans=btn.querySelectorAll('span');
+  const links=document.querySelector('.nav-links');
+  const open=links.style.display==='flex';
+  links.style.display=open?'none':'flex';
+  links.style.flexDirection='column'; links.style.position='absolute'; links.style.top='64px'; links.style.left='0'; links.style.right='0'; links.style.background='rgba(17,17,17,.98)'; links.style.padding='20px 24px'; links.style.borderBottom='1px solid #2e2e2e';
+  spans[0].style.transform=open?'':'rotate(45deg) translate(5px,5px)';
+  spans[1].style.opacity=open?'1':'0';
+  spans[2].style.transform=open?'':'rotate(-45deg) translate(5px,-5px)';
+}
+
+// ── FADE IN ──
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+},{threshold:.1});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
